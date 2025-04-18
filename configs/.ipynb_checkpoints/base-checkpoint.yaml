@@ -1,0 +1,68 @@
+#general setting
+name: wtst-base
+num_gpu: 1
+manual_seed: 42
+
+#datasets and dataloader setting
+datasets:
+  root_dir: 'benchmarks'
+  name: 'eth'
+  obs_len: 8
+  pred_len: 12
+  skip: 1  #skip frame
+  threshold: 0.002
+  norm_lap_matr: True
+  padd_sequence: True
+  cons_frame: True
+  verbose: True #print datainfos
+  batch_size: 128
+
+  #Each time the network traverses a sample trajectory,
+  #it traverses a total of batch_size times to summarize the loss and update the gradient.
+
+#model structures
+model:
+  in_dim: 2
+  dim: 128
+  obs_len: 8
+  pred_len: 12
+  num_layer: 4
+  drop_path_rate: 0.1
+  out_dim: 5 #ux,uy,sx,sy,corr-->x,y
+  norm_name: 'ln'
+  num_heads: 4
+  ffn_ratio: 4
+  attn_drop: 0.
+  drop: 0.
+  qkv_bias: True
+  if_ta: True
+  if_sa: True
+  if_ita: True
+
+eval:
+  k: 20
+
+train:
+  lr0: 0.01
+  epochs: 100
+  fp16: False
+  warmup: True
+  print_freq: 1
+  clip_grad: 10
+  eval_freq: 1
+  save_freq: 10
+
+
+#visualization
+visual:
+  frame_root: ./frames/
+  name: eth
+
+
+
+
+
+
+
+
+
